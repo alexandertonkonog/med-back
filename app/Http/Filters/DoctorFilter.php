@@ -7,13 +7,13 @@ use App\Http\Filters\AbstractFilter;
 
 class DoctorFilter extends AbstractFilter {
     public const NAME = 'name';
-    public const USER_ID = 'userId';
+    public const USER_ID = 'user_id';
     public const ID = 'id';
 
     protected function getCallbacks() : array {
         $result = [
             self::NAME => [$this, 'name'],
-            self::USER_ID => [$this, 'userId'],
+            self::USER_ID => [$this, 'user_id'],
             self::ID => [$this, 'id'],
         ];
         return $result;
@@ -23,7 +23,7 @@ class DoctorFilter extends AbstractFilter {
         $builder->where('name', 'like', "%{$value}%");
     }
 
-    public function userId(Builder $builder, $value) {
+    public function user_id(Builder $builder, $value) {
         $builder->where('user_id', $value);
     }
 

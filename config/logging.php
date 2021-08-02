@@ -41,6 +41,13 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'sql' => [
+            'driver' => 'stack',
+            'path' => storage_path('logs/sql.log'),
+            'channels' => ['single'],
+            'ignore_exceptions' => false,
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

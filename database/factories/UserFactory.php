@@ -23,12 +23,14 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $type = \App\Models\Group::get()->random()->id;
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'type' => rand(1,3),
+            'type' => $type,
             'password' => Hash::make('123Fktrcfylh123'),
+            'parent_id' => $type == 3 ? rand(1,50) : null,
         ];
     }
 

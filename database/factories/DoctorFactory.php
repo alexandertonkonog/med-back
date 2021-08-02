@@ -25,7 +25,6 @@ class DoctorFactory extends Factory
             'name' => $this->faker->name(),
             'external_id' => $this->faker->unique()->safeEmail(),
             'user_id' => \App\Models\User::get()->random()->id,
-
         ];
     }
 }

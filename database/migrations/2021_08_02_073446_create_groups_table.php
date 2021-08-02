@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDoctorFileTable extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateDoctorFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('doctor_file', function (Blueprint $table) {
-            $table->id();
-            $table->integer('doctor_id');
-            $table->integer('file_id');
+        Schema::create('groups', function (Blueprint $table) {
+            $table->tinyIncrements('id');
+            $table->string('name', 50);
+            $table->tinyText('description');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ class CreateDoctorFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doctor_file');
+        Schema::dropIfExists('groups');
     }
 }

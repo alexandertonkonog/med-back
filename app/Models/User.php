@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\File;
+use App\Models\Group;
+use App\Models\Right;
+use App\Models\Clinic;
+use App\Models\Doctor;
+use App\Models\Service;
+use App\Models\Connection;
+use App\Models\Specialization;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Doctor;
-use App\Models\Clinic;
-use App\Models\File;
 
 class User extends Authenticatable
 {
@@ -35,7 +39,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'email_verified_at'
+        'email_verified_at',
+        'pivot',
+        'created_at',
+        'updated_at',
+        'file_id',
+        'parent_id'
     ];
 
     /**
@@ -47,9 +56,42 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function img()
+    {
+        return $this->morphOne(File::class, 'imgable');
+    }
+
     public function clinics()
     {
         return $this->hasMany(Clinic::class);
+    }
+
+    public function group() {
+        return $this->belongsTo(Group::class, 'type');
+    }
+
+    public function rights() {
+        return $this->morphOne(Right::class, 'rightable');
+    }
+
+    public function specializations()
+    {
+        return $this->hasMany(Specialization::class);
+    }
+
+    public function connections()
+    {
+        return $this->hasMany(Connection::class);
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 
     public function doctors()
@@ -57,8 +99,13 @@ class User extends Authenticatable
         return $this->hasMany(Doctor::class);
     }
 
-    public function img()
+    public function children()
     {
-        return $this->hasOne(File::class, 'user_id');
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
     }
 }

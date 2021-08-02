@@ -24,8 +24,9 @@ class SpecializationFactory extends Factory
         return [
             'name' => $this->faker->text(20),
             'external_id' => $this->faker->unique()->safeEmail(),
+            'user_id' => \App\Models\User::get()->random()->id,
             'description' => $this->faker->text(255),
-            'code' => rand(1,10),
+            'code' => $this->faker->unique()->safeEmail(),
         ];
     }
 }

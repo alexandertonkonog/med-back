@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\Filterable;
-use App\Models\Doctor;
 use App\Models\File;
+use App\Models\Doctor;
+use App\Models\Specialization;
+use App\Models\Traits\Filterable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Service extends Model
 {
@@ -15,17 +16,35 @@ class Service extends Model
 
     protected $hidden = [
         'external_id',
+        'pivot',
+        'created_at',
+        'updated_at',
+        'file_id',
+        'user_id'
     ];
 
     protected $guarded = [];
 
     public function img()
     {
-        return $this->hasOne(File::class, 'service_id');
+        return $this->morphOne(File::class, 'imgable');
     }
 
     public function doctors()
     {
         return $this->belongsToMany(Doctor::class);
+    }
+
+    public function specializations() {
+        return $this->belongsToMany(Specialization::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleted(function ($doctor) {
+            $doctor->doctors()->detach();
+            $doctor->specializations()->detach();
+            $doctor->img->delete();
+        });
     }
 }

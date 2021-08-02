@@ -23,7 +23,6 @@ class AuthService {
     }
 
     public function getToken($data) {
-        $secretKey  = env('JWT_SECRET', false);
         $issuedAt   = new \DateTimeImmutable();
         $expire     = $issuedAt->modify('+90 days')->getTimestamp();
         $serverName = env('APP_URL', false);

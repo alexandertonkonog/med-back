@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Doctor;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ApiFormRequest;
 
-class FilterRequest extends FormRequest
+class FilterRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,6 +27,10 @@ class FilterRequest extends FormRequest
             'name' => 'string',
             'user_id' => 'integer',
             'id' => 'integer',
+            'withServices' => 'integer',
+            'withFiles' => 'integer',
+            'withSpecializations' => 'integer',
+            'withImg' => 'integer',
         ];
     }
 }

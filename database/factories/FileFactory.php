@@ -22,12 +22,12 @@ class FileFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->title(),
-            'url' => $this->faker->image(),
-            'user_id' => \App\Models\User::get()->random()->id,
-            'clinic_id' => \App\Models\Clinic::get()->random()->id,
-            'service_id' => \App\Models\Service::get()->random()->id,
-            'doctor_id' => \App\Models\Doctor::get()->random()->id,
+            'path' => $this->faker->image(),
+            'disk' => 'public',
+            'fileable_id' => \App\Models\Doctor::get()->random()->id,
+            'fileable_type' => \App\Models\Doctor::class,
+            'imgable_id' => \App\Models\User::get()->random()->id,
+            'imgable_type' => 'doctor'
         ];
     }
 }

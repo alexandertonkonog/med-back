@@ -16,6 +16,9 @@ class CreateLogEventsTable extends Migration
         Schema::create('log_events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->integer('code');
+            $table->integer('object');
             $table->timestamps();
         });
     }

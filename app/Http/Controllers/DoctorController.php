@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\DoctorService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteRequest;
 use App\Http\Requests\Doctor\CreateRequest;
 use App\Http\Requests\Doctor\FilterRequest;
+use App\Http\Requests\Doctor\UpdateRequest;
 
 class DoctorController extends Controller
 {
@@ -23,12 +25,18 @@ class DoctorController extends Controller
     public function create(CreateRequest $request) {
         $data = $request->validated();
 
-        return $this->service->create($data, $request);
+        return $this->service->create($data);
     }
 
-    public function upsert(FilterRequest $request) {
+    public function update(UpdateRequest $request) {
         $data = $request->validated();
 
-        return $this->service->doctors($data);
+        return $this->service->update($data);
     }
+
+    public function delete(DeleteRequest $request) {
+        $data = $request->validated();
+
+        return $this->service->delete($data);
+    }   
 }

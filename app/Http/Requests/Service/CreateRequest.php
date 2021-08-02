@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Service;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ApiFormRequest;
 
-class CreateRequest extends FormRequest
+class CreateRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,12 @@ class CreateRequest extends FormRequest
             'external_id' => ['string'],
             'duration' => ['integer'],
             'cost' => ['integer'],
+            'code' => ['string'],
             'img' => ['dimensions:min_width=100,min_height=100'],
+            'doctors' => ['array'],
+            'specializations' => ['array'],
+            'doctors.*' => ['integer'],
+            'specializations.*' => ['integer'],
         ];
     }
 }

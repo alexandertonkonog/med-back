@@ -15,10 +15,11 @@ class CreateSpecializationsTable extends Migration
     {
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
-            $table->string('external_id')->nullable();
+            $table->string('external_id', 100)->nullable();
+            $table->integer('user_id')->nullable();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('code');
+            $table->string('code', 50);
             $table->timestamps();
         });
     }

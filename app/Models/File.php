@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Clinic;
-use App\Models\Doctor;
-use App\Models\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -16,39 +13,39 @@ class File extends Model
     protected $guarded = [];
 
     protected $hidden = [
-        'user_id',
-        'doctor_id',
-        'service_id',
-        'clinic_id',
+        'pivot',
+        'created_at',
+        'updated_at',
+        'imgable_id',
+        'fileable_id',
+        'fileable_type',
+        'imgable_type',
+        'path',
+        'disk'
     ];
 
-    public function doctors()
+    protected $appends = ['url'];
+
+    public function getUrlAttribute()
     {
-        return $this->belongsToMany(Doctor::class);
+        return asset(Storage::url($this->path));
     }
 
-    public function doctorOwner()
+    public function imgable()
     {
-        return $this->belongsTo(Doctor::class, 'file_id');
+        return $this->morphTo();
     }
 
-    public function serviceOwner()
+    public function fileable()
     {
-        return $this->belongsTo(Service::class, 'file_id');
-    }
-    
-    public function clinicOwner()
-    {
-        return $this->belongsTo(Clinic::class, 'file_id');
+        return $this->morphTo();
     }
 
-    public function userOwner()
+    protected static function booted()
     {
-        return $this->belongsTo(User::class, 'file_id');
-    }
-
-    public function clinics()
-    {
-        return $this->belongsToMany(Clinic::class);
+        static::deleted(function ($file) {
+            $disk = $file->disk ?: 'public';
+            Storage::disk($disk)->delete($file->path);
+        });
     }
 }

@@ -24,8 +24,10 @@ class ServiceFactory extends Factory
         return [
             'name' => $this->faker->title(),
             'external_id' => $this->faker->unique()->safeEmail(),
+            'user_id' => \App\Models\User::get()->random()->id,
             'cost' => rand(1000, 3000),
             'duration' => rand(15, 120),
+            'code' => $this->faker->unique()->safeEmail(),
         ];
     }
 }

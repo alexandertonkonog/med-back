@@ -15,12 +15,12 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
-            $table->string('name')->nullable();
-            $table->integer('doctor_id')->nullable();
-            $table->integer('service_id')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->integer('clinic_id')->nullable();
+            $table->string('path');
+            $table->string('disk', 50);
+            $table->integer('fileable_id')->nullable();
+            $table->string('fileable_type', 50)->nullable();
+            $table->integer('imgable_id')->nullable();
+            $table->string('imgable_type', 50)->nullable();
             $table->timestamps();
         });
     }

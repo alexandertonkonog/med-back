@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClinicFileTable extends Migration
+class CreateConnectionRefsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateClinicFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('clinic_file', function (Blueprint $table) {
+        Schema::create('connection_refs', function (Blueprint $table) {
             $table->id();
-            $table->integer('clinic_id');
-            $table->integer('file_id');
+            $table->string('name', 50);
+            $table->json('props')->nullable();
+            $table->string('description')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateClinicFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clinic_file');
+        Schema::dropIfExists('connection_refs');
     }
 }

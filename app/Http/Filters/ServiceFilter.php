@@ -9,12 +9,14 @@ class ServiceFilter extends AbstractFilter {
     public const NAME = 'name';
     public const ID = 'id';
     public const COST = 'cost';
+    public const USER_ID = 'user_id';
 
     protected function getCallbacks() : array {
         $result = [
             self::NAME => [$this, 'name'],
             self::ID => [$this, 'id'],
             self::COST => [$this, 'cost'],
+            self::USER_ID => [$this, 'user_id'],
         ];
         return $result;
     }
@@ -25,6 +27,10 @@ class ServiceFilter extends AbstractFilter {
 
     public function id(Builder $builder, $value) {
         $builder->where('id', $value);
+    }
+
+    public function user_id(Builder $builder, $value) {
+        $builder->where('user_id', $value);
     }
 
     public function cost(Builder $builder, $value) {

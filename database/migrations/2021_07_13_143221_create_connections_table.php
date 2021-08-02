@@ -15,6 +15,14 @@ class CreateConnectionsTable extends Migration
     {
         Schema::create('connections', function (Blueprint $table) {
             $table->id();
+            $table->string('login', 50)->nullable();
+            $table->string('url')->nullable();
+            $table->string('duration', 20)->nullable();
+            $table->string('password', 50)->nullable();
+            $table->integer('type_id');
+            $table->string('subtype_id')->nullable();
+            $table->integer('user_id');
+            $table->json('props')->nullable();
             $table->timestamps();
         });
     }

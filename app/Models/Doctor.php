@@ -16,28 +16,44 @@ class Doctor extends Model
 
     protected $hidden = [
         'external_id',
-        'user_id'
+        'user_id',
+        'pivot',
+        'created_at',
+        'updated_at',
+        'file_id'
     ];
 
     protected $guarded = [];
 
     public function img()
     {
-        return $this->hasOne(File::class, 'doctor_id');
+        return $this->morphOne(File::class, 'imgable');
     }
 
     public function files()
     {
-        return $this->belongsToMany(File::class);
+        return $this->morphMany(File::class, 'fileable');
     }
 
     public function services()
     {
         return $this->belongsToMany(Service::class);
-    }
+    }    
 
     public function specializations()
     {
         return $this->belongsToMany(Specialization::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleted(function ($doctor) {
+            foreach($doctor->files() as $file) {
+                $file->delete();
+            };
+            $doctor->services()->detach();
+            $doctor->specializations()->detach();
+            $doctor->img->delete();
+        });
     }
 }
