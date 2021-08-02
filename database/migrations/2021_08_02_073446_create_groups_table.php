@@ -17,6 +17,7 @@ class CreateGroupsTable extends Migration
             $table->tinyIncrements('id');
             $table->string('name', 50);
             $table->tinyText('description');
+            $table->integer('user_id')->default(1);
             $table->timestamps();
         });
     }

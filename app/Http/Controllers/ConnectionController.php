@@ -2,41 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ConnectionService;
+use App\Models\Connection;
+use App\Services\MainService;
+use App\Http\Filters\ConnectionFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteRequest;
 use App\Http\Requests\Connection\CreateRequest;
 use App\Http\Requests\Connection\FilterRequest;
 use App\Http\Requests\Connection\UpdateRequest;
-use App\Models\Connection;
 
 class ConnectionController extends Controller
 {
-    function __construct(ConnectionService $service) {
-        $this->service = $service;
+    public function __construct() {
+        $this->service = new MainService([
+            'attributes' => [
+                'manyToMany' => [] 
+            ],
+            'model' => Connection::class,
+            'rightName' => 'connection',
+            'filter' => ConnectionFilter::class
+        ]);
     }
 
     public function select(FilterRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->select($data);
+        return $this->service->select($request);
     }
 
     public function create(CreateRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->create($data);
+        return $this->service->create($request);
     }
 
     public function update(UpdateRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->update($data);
+        return $this->service->update($request);
     }
     
     public function delete(DeleteRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->delete($data);
-    }   
+        return $this->service->delete($request);
+    }    
 }

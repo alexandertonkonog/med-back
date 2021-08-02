@@ -19,7 +19,7 @@ class ClinicService {
 
     public function create($data) {
         $helper = new FileHelper($data);
-        
+       
         DB::beginTransaction();
         try {
             $user = Auth::user();

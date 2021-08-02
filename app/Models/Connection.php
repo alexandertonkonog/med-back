@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Models\ConnectionRef;
+use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Connection extends Model
 {
     use HasFactory;
+    use Filterable;
 
     protected $hidden = [
         'user_id',

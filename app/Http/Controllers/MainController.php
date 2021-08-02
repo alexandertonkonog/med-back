@@ -4,40 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Services\ClinicService;
 use App\Http\Controllers\Controller;
-use App\Http\Filters\ClinicFilter;
 use App\Http\Requests\DeleteRequest;
 use App\Http\Requests\Clinic\CreateRequest;
 use App\Http\Requests\Clinic\FilterRequest;
 use App\Http\Requests\Clinic\UpdateRequest;
-use App\Models\Clinic;
 use App\Services\MainService;
 
 class ClinicController extends Controller
 {
-    function __construct() {
-        $this->service = new MainService([
-            'attributes' => [
-                'manyToMany' => [] 
-            ],
-            'model' => Clinic::class,
-            'rightName' => 'clinic',
-            'filter' => ClinicFilter::class
-        ]);
+    function __construct($service) {
+        $this->service = new MainService();
     }
 
     public function select(FilterRequest $request) {
-        return $this->service->select($request);
+        $data = $request->validated();
+        
+        return $this->service->select($data);
     }
 
     public function create(CreateRequest $request) {
-        return $this->service->create($request);
+        $data = $request->validated();
+
+        return $this->service->create($data);
     }
 
     public function update(UpdateRequest $request) {
-        return $this->service->update($request);
+        $data = $request->validated();
+
+        return $this->service->update($data);
     }
     
     public function delete(DeleteRequest $request) {
-        return $this->service->delete($request);
+        $data = $request->validated();
+
+        return $this->service->delete($data);
     }   
 }

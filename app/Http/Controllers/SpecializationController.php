@@ -2,41 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Services\SpecializationService;
+use App\Services\MainService;
+use App\Models\Specialization;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteRequest;
+use App\Http\Filters\SpecializationFilter;
 use App\Http\Requests\Specialization\CreateRequest;
 use App\Http\Requests\Specialization\FilterRequest;
 use App\Http\Requests\Specialization\UpdateRequest;
 
 class SpecializationController extends Controller
 {
-    function __construct(SpecializationService $service) {
-        $this->service = $service;
+    function __construct() {
+        $this->service = new MainService([
+            'attributes' => [
+                'manyToMany' => ['services', 'doctors'] 
+            ],
+            'model' => Specialization::class,
+            'rightName' => 'clinic',
+            'filter' => SpecializationFilter::class
+        ]);
     }
 
     public function select(FilterRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->select($data);
+        return $this->service->select($request);
     }
 
     public function create(CreateRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->create($data);
+        return $this->service->create($request);
     }
 
     public function update(UpdateRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->update($data);
+        return $this->service->update($request);
     }
-
+    
     public function delete(DeleteRequest $request) {
-        $data = $request->validated();
-
-        return $this->service->delete($data);
+        return $this->service->delete($request);
     }   
 }

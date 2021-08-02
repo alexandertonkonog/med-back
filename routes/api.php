@@ -88,5 +88,6 @@ Route::group([
 });
 
 Route::get('/test', function(Request $request) {
-    return Clinic::find(105);
+    $entity = Clinic::find(105);
+    return $entity->withAll();
 });
