@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Clinic;
 use App\Models\Doctor;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
@@ -10,7 +11,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ConnectionController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ConnectionRefController;
 use App\Http\Controllers\SpecializationController;
 
@@ -30,7 +33,6 @@ Route::group([
     Route::get('/specializations', [SpecializationController::class, 'select']);
     Route::get('/clinics', [ClinicController::class, 'select']);
     Route::get('/connections', [ConnectionController::class, 'select']);
-    Route::get('/connection-refs', [ConnectionRefController::class, 'select']);
 });
 
 Route::group([
@@ -70,6 +72,16 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'appointments',
+    'middleware' => AuthMiddleware::class
+], function ($router) {
+    Route::get('', [AppointmentController::class, 'select']);
+    Route::post('create', [AppointmentController::class, 'create']);
+    Route::post('delete', [AppointmentController::class, 'delete']);
+    Route::post('update', [AppointmentController::class, 'update']);
+});
+
+Route::group([
     'prefix' => 'connections',
     'middleware' => AuthMiddleware::class
 ], function ($router) {
@@ -82,12 +94,22 @@ Route::group([
     'prefix' => 'connection-refs',
     'middleware' => AuthMiddleware::class
 ], function ($router) {
+    Route::get('', [ConnectionRefController::class, 'select']);
     Route::post('create', [ConnectionRefController::class, 'create']);
     Route::post('delete', [ConnectionRefController::class, 'delete']);
     Route::post('update', [ConnectionRefController::class, 'update']);
 });
 
+Route::group([
+    'prefix' => 'schedule',
+    'middleware' => AuthMiddleware::class
+], function ($router) {
+    Route::get('', [ScheduleController::class, 'select']);
+    Route::post('create', [ScheduleController::class, 'create']);
+    Route::post('delete', [ScheduleController::class, 'delete']);
+    Route::post('update', [ScheduleController::class, 'update']);
+});
+
 Route::get('/test', function(Request $request) {
-    $entity = Clinic::find(105);
-    return $entity->withAll();
+    return Appointment::find(4)->service;
 });

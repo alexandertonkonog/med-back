@@ -16,7 +16,7 @@ class CreateRightsTable extends Migration
         Schema::create('rights', function (Blueprint $table) {
             $table->id();
             $table->integer('rightable_id');
-            $table->string('rightable_type', 20);
+            $table->string('rightable_type', 40);
             $table->string('user', 10);
             $table->string('clinic', 10);
             $table->string('ref', 10);

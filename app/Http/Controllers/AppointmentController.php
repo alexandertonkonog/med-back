@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ConnectionRef;
-use App\Services\MainService;
+use App\Services\AppointmentService;
+use App\Models\Appointment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteRequest;
-use App\Http\Requests\Connection\CreateRequest;
-use App\Http\Requests\Connection\FilterRequest;
-use App\Http\Requests\Connection\UpdateRequest;
+use App\Http\Filters\AppointmentFilter;
+use App\Http\Requests\Appointment\CreateRequest;
+use App\Http\Requests\Appointment\FilterRequest;
+use App\Http\Requests\Appointment\UpdateRequest;
 
-class ConnectionRefController extends Controller
+class AppointmentController extends Controller
 {
     function __construct() {
-        $this->service = new MainService([
+        $this->service = new AppointmentService([
             'attributes' => [
-                'manyToMany' => [] 
+                'manyToMany' => []
             ],
-            'model' => ConnectionRef::class,
-            'rightName' => 'ref',
-            'filter' => ConnectionRefFilter::class,
+            'model' => Appointment::class,
+            'rightName' => 'appointment',
+            'filter' => AppointmentFilter::class,
             'checkSelect' => true
         ]);
     }

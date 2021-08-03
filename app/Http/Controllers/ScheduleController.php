@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ConnectionRef;
-use App\Services\MainService;
+use App\Services\ScheduleService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteRequest;
-use App\Http\Requests\Connection\CreateRequest;
-use App\Http\Requests\Connection\FilterRequest;
-use App\Http\Requests\Connection\UpdateRequest;
+use App\Http\Filters\ScheduleFilter;
+use App\Http\Requests\Schedule\CreateRequest;
+use App\Http\Requests\Schedule\FilterRequest;
+use App\Http\Requests\Schedule\UpdateRequest;
+use App\Models\Schedule;
 
-class ConnectionRefController extends Controller
+class ScheduleController extends Controller
 {
     function __construct() {
-        $this->service = new MainService([
+        $this->service = new ScheduleService([
             'attributes' => [
-                'manyToMany' => [] 
+                'manyToMany' => []
             ],
-            'model' => ConnectionRef::class,
-            'rightName' => 'ref',
-            'filter' => ConnectionRefFilter::class,
+            'model' => Schedule::class,
+            'rightName' => 'appointment',
+            'filter' => ScheduleFilter::class,
             'checkSelect' => true
         ]);
     }

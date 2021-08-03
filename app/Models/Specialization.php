@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Doctor;
 use App\Models\Service;
+use App\Models\Appointment;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,11 @@ class Specialization extends Model
     public function doctors()
     {
         return $this->belongsToMany(Doctor::class);
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 
     public function services()

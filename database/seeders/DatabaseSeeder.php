@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Specialization::factory(100)->create();
         \App\Models\File::factory(10)->create();
         \App\Models\Connection::factory(20)->create();
+        \App\Models\Appointment::factory(50)->create();
+        \App\Models\Schedule::factory(50)->create();
     }
 }

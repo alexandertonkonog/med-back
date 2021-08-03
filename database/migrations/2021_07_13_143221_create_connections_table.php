@@ -19,8 +19,8 @@ class CreateConnectionsTable extends Migration
             $table->string('url')->nullable();
             $table->string('duration', 20)->nullable();
             $table->string('password', 50)->nullable();
-            $table->integer('type_id');
-            $table->string('subtype_id')->nullable();
+            $table->tinyInteger('type_id');
+            $table->string('subtype_id', 10)->nullable();
             $table->integer('user_id');
             $table->json('props')->nullable();
             $table->timestamps();

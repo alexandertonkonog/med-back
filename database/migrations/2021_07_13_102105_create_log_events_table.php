@@ -17,8 +17,8 @@ class CreateLogEventsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->integer('code');
-            $table->integer('object');
+            $table->tinyInteger('code');
+            $table->tinyInteger('object');
             $table->timestamps();
         });
     }

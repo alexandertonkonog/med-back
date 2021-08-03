@@ -9,6 +9,7 @@ use App\Models\Clinic;
 use App\Models\Doctor;
 use App\Models\Service;
 use App\Models\Connection;
+use App\Models\Appointment;
 use App\Models\Specialization;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -82,6 +83,11 @@ class User extends Authenticatable
     public function connections()
     {
         return $this->hasMany(Connection::class);
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 
     public function files()

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\File;
 use App\Models\Service;
+use App\Models\Appointment;
 use App\Models\Specialization;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +40,11 @@ class Doctor extends Model
     {
         return $this->belongsToMany(Service::class);
     }    
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 
     public function specializations()
     {
