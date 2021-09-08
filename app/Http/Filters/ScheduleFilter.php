@@ -8,69 +8,71 @@ use App\Http\Filters\AbstractFilter;
 class ScheduleFilter extends AbstractFilter {
     public const MOREDATETIME = 'moreDateTime';
     public const LESSDATETIME = 'lessDateTime';
+    public const CURRENT = 'current';
     public const ID = 'id';
     public const USER_ID = 'user_id';
     public const DOCTOR_ID = 'doctor_id';
-    public const SERVICE_ID = 'service_id';
-    public const EXTERNAL_ID = 'external_id';
-    public const SPECIALIZATION_ID = 'specialization_id';
+    public const OWNER_ID = 'owner_id';
+    public const OWNER_TYPE = 'owner_type';
     public const CLINIC_ID = 'clinic_id';
-    public const CONFIRMED = 'confirmed';
 
     protected function getCallbacks() : array {
         $result = [
             self::MOREDATETIME => [$this, 'moreDateTime'],
             self::LESSDATETIME => [$this, 'lessDateTime'],
+            self::CURRENT => [$this, 'current'],
             self::ID => [$this, 'id'],
             self::USER_ID => [$this, 'user_id'],
             self::DOCTOR_ID => [$this, 'doctor_id'],
-            self::SERVICE_ID => [$this, 'service_id'],
-            self::EXTERNAL_ID => [$this, 'external_id'],
-            self::SPECIALIZATION_ID => [$this, 'specialization_id'],
             self::CLINIC_ID => [$this, 'clinic_id'],
-            self::CONFIRMED => [$this, 'confirmed'],
+            self::OWNER_ID => [$this, 'owner_id'],
+            self::OWNER_TYPE => [$this, 'owner_type'],
         ];
         return $result;
     }
 
     public function moreDateTime(Builder $builder, $value) {
-        $builder->where('dateTime', '>' , $value);
+        $builder->where('started_at', '>' , $value);
     }
 
     public function lessDateTime(Builder $builder, $value) {
-        $builder->where('dateTime', '<' , $value);
-    }
-
-    public function id(Builder $builder, $value) {
-        $builder->where('id', $value);
+        $builder->where('deleted_at', '<' , $value);
     }
 
     public function user_id(Builder $builder, $value) {
         $builder->where('user_id', $value);
     }
 
+    public function current(Builder $builder, $value) {
+        $builder->where('deleted_at', '>', (new \DateTime())->format(('Y-m-d')));
+    }
+
     public function doctor_id(Builder $builder, $value) {
         $builder->where('doctor_id', $value);
     }
 
-    public function service_id(Builder $builder, $value) {
-        $builder->where('doctor_id', $value);
+    public function owner_id(Builder $builder, $value) {
+        $builder->where('scheduleable_id', $value);
     }
 
-    public function external_id(Builder $builder, $value) {
-        $builder->where('doctor_id', $value);
-    }
-
-    public function specialization_id(Builder $builder, $value) {
-        $builder->where('doctor_id', $value);
+    public function owner_type(Builder $builder, $value) {
+        $type = $this->getType($value);
+        $builder->where('scheduleable_type', $type);
     }
 
     public function clinic_id(Builder $builder, $value) {
         $builder->where('doctor_id', $value);
     }
 
-    public function confirmed(Builder $builder, $value) {
-        $builder->where('confirmed', $value);
+    private function getType($type) {
+        switch ($type) {
+            case 'doctor':
+                return 'App\Models\Doctor';
+            case 'user':
+                return 'App\Models\User';
+            case 'clinic':
+                return 'App\Models\Clinic';
+        }
     }
 
 }

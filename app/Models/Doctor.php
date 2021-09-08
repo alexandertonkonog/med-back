@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\File;
 use App\Models\Service;
+use App\Models\Schedule;
 use App\Models\Appointment;
 use App\Models\Specialization;
 use App\Models\Traits\Filterable;
@@ -34,6 +35,11 @@ class Doctor extends Model
     public function files()
     {
         return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function schedule()
+    {
+        return $this->morphMany(Schedule::class, 'scheduleable');
     }
 
     public function services()

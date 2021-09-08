@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\File;
+use App\Models\Schedule;
 use App\Models\Appointment;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,11 @@ class Clinic extends Model
     public function img()
     {
         return $this->morphOne(File::class, 'imgable');
+    }
+
+    public function schedule()
+    {
+        return $this->morphMany(Schedule::class, 'scheduleable');
     }
     
     public function files()

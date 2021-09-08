@@ -22,37 +22,34 @@ class ScheduleFactory extends Factory
     public function definition()
     {
         $type = rand(1,3);
-        $offset = $type === 1 ? 0 : rand(1,3);
+        $firstDay = $type === 2 ? new \DateTime() : null;
         $schedule = [];
-        $work = $week = $max = null;
+        $max = $format = null;
         $date = new \DateTime();
+        
         if ($type === 1) {
+            $format = '0.1.1.1.0.1.1';
             $max = 5;
         } else if ($type === 2) {
-            $max = 7;
+            $min = rand(0, 7);
+            $format =  $min . '/' . rand(0, 7);
+            $max = $min;
         } else {
             $max = 31;
         }
         for($i = 0; $i < $max; $i++) {
-            $schedule[$date->modify('+1 day')->format('Y-m-d\TH:i:s.u')] = ['start' => '0000-00-00T08:00:00', 'end' => '0000-00-00T17:00:00'];
+            $schedule[] = ['date' => $date->modify('+1 day')->format('Y-m-d\TH:i:s.u'), 'start' => '0000-00-00T08:00:00', 'end' => '0000-00-00T17:00:00'];
         }
-        if ($type === 1) {
-            $work = 5;
-            $week = 2;
-            
-        } else {
-            $work = rand(1,6);
-            $week = 7 - $work;
-        }
+        $finish = $this->faker->dateTime('2050-05-07');
         return [
-            'deleted_at' => $this->faker->dateTime('2050-05-07'),
-            'type' => $type,    
-            'offset' => $offset,
-            'working_days' => $work,
-            'weekends' => $week,
+            'month' => $type === 3 ? $finish : null,
+            'type' => $type,
+            'format' => $format,
+            'first_day' => $firstDay,
             'schedule' => json_encode($schedule),
-            'sheduleable_id' => \App\Models\User::get()->random()->id,
-            'sheduleable_type' => \App\Models\User::class
+            'scheduleable_id' => \App\Models\Doctor::get()->random()->id,
+            'scheduleable_type' => \App\Models\Doctor::class,
+            'user_id' => \App\Models\User::get()->random()->id
         ];
     }
 }

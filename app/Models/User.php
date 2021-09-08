@@ -8,6 +8,7 @@ use App\Models\Right;
 use App\Models\Clinic;
 use App\Models\Doctor;
 use App\Models\Service;
+use App\Models\Schedule;
 use App\Models\Connection;
 use App\Models\Appointment;
 use App\Models\Specialization;
@@ -60,6 +61,11 @@ class User extends Authenticatable
     public function img()
     {
         return $this->morphOne(File::class, 'imgable');
+    }
+
+    public function schedule()
+    {
+        return $this->morphMany(Schedule::class, 'scheduleable');
     }
 
     public function clinics()

@@ -19,9 +19,10 @@ class MainService {
         $this->rightName = $data['rightName'];
         $this->filter = $data['filter'];
         $this->checkSelect = $data['checkSelect'] ?? false;
+        $this->replaceValues = $data['replaceValues'] ?? false;
     }
 
-    public function select(Request $request) {
+    public function select(Request $request, $select = '*') {
         if ($this->checkSelect) {
             // if (Gate::denies('check', [['action' => 0, 'name' => $this->rightName]])) {
             //     return response(['message' => 'You don\'t have enough permissions'], 403);
@@ -31,7 +32,22 @@ class MainService {
         $data = $request->validated();
         $withArray = FilterHelper::getRelationsArray($data);
         $filter = app()->make($this->filter, ['queryParams' => array_filter($data)]);
-        return $this->entity::with($withArray)->filter($filter)->paginate(10);
+        return $this->entity::with($withArray)->filter($filter)->select($select)->paginate(10);
+    }
+
+    public function find(Request $request, int $id, $select = "*") {
+
+        $data = $request->validated();
+
+        $withArray = FilterHelper::getRelationsArray($data, 'with', $this->replaceValues);
+
+        if ($this->checkSelect) {
+            // if (Gate::denies('check', [['action' => 0, 'name' => $this->rightName]])) {
+            //     return response(['message' => 'You don\'t have enough permissions'], 403);
+            // }
+        }
+
+        return $this->entity::with($withArray)->select($select)->find($id);
     }
 
     public function create(Request $request) { 

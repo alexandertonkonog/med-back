@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
 use App\Services\ScheduleService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeleteRequest;
 use App\Http\Filters\ScheduleFilter;
+use App\Http\Requests\DeleteRequest;
+use App\Http\Requests\Schedule\FindRequest;
 use App\Http\Requests\Schedule\CreateRequest;
 use App\Http\Requests\Schedule\FilterRequest;
 use App\Http\Requests\Schedule\UpdateRequest;
-use App\Models\Schedule;
 
 class ScheduleController extends Controller
 {
@@ -21,12 +22,17 @@ class ScheduleController extends Controller
             'model' => Schedule::class,
             'rightName' => 'appointment',
             'filter' => ScheduleFilter::class,
-            'checkSelect' => true
+            'checkSelect' => true,
+            'replaceValues' => ['owner' => 'scheduleable']
         ]);
     }
 
     public function select(FilterRequest $request) {
         return $this->service->select($request);
+    }
+
+    public function find(FindRequest $request, int $id) {
+        return $this->service->find($request, $id);
     }
 
     public function create(CreateRequest $request) {

@@ -28,7 +28,10 @@ class FilterRequest extends ApiFormRequest
             'clinic_id' => ['integer'],
             'user_id' => ['integer'],
             'moreDateTime' => ['date'],
+            'start' => ['date'],
+            'end' => ['date'],
             'lessDateTime' => ['date'],
+            'current' => ['boolean'],
             'owner_id' => ['integer'],
             'owner_type' => ['string'],
         ];

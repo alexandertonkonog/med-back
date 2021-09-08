@@ -105,6 +105,7 @@ Route::group([
     'middleware' => AuthMiddleware::class
 ], function ($router) {
     Route::get('', [ScheduleController::class, 'select']);
+    Route::get('{id}', [ScheduleController::class, 'find']);
     Route::post('create', [ScheduleController::class, 'create']);
     Route::post('delete', [ScheduleController::class, 'delete']);
     Route::post('update', [ScheduleController::class, 'update']);
