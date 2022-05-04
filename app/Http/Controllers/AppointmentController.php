@@ -25,11 +25,11 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function select(FilterRequest $request) {
+    public function index(FilterRequest $request) {
         return $this->service->select($request);
     }
 
-    public function create(CreateRequest $request) {
+    public function store(CreateRequest $request) {
         return $this->service->create($request);
     }
 
@@ -37,7 +37,7 @@ class AppointmentController extends Controller
         return $this->service->update($request);
     }
     
-    public function delete(DeleteRequest $request) {
+    public function destroy(DeleteRequest $request) {
         return $this->service->delete($request);
     }   
 }

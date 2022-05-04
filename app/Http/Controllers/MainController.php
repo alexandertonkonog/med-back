@@ -16,13 +16,13 @@ class ClinicController extends Controller
         $this->service = new MainService();
     }
 
-    public function select(FilterRequest $request) {
+    public function index(FilterRequest $request) {
         $data = $request->validated();
         
         return $this->service->select($data);
     }
 
-    public function create(CreateRequest $request) {
+    public function store(CreateRequest $request) {
         $data = $request->validated();
 
         return $this->service->create($data);
@@ -34,7 +34,7 @@ class ClinicController extends Controller
         return $this->service->update($data);
     }
     
-    public function delete(DeleteRequest $request) {
+    public function destroy(DeleteRequest $request) {
         $data = $request->validated();
 
         return $this->service->delete($data);
