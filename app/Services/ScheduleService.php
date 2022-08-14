@@ -142,8 +142,7 @@ class ScheduleService extends MainService {
             foreach($data['schedule'] as $elem) {
                 if ($elem['date'] === (int) $date->format('w')) {
                     $elem['date'] = $date->format('Y-m-dTH:i:s');
-                    $schedule[] =  
-                    break;
+                    $schedule[] = 1;
                 }
             }
             $date->modify('+1 day');

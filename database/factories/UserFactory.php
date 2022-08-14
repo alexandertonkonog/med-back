@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 class UserFactory extends Factory
@@ -23,12 +22,11 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $type = \App\Models\Group::get()->random()->id;
+        $type = \App\Models\UserType::get()->random()->id;
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'type' => $type,
             'password' => Hash::make('123Fktrcfylh123'),
             'parent_id' => $type == 3 ? rand(1,50) : null,
         ];

@@ -6,11 +6,12 @@ use App\Models\Doctor;
 use App\Utils\FileHelper;
 use App\Utils\RightHelper;
 use App\Utils\FilterHelper;
+use App\Services\MainService;
 use App\Http\Filters\DoctorFilter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class DoctorService {
+class DoctorService extends MainService {
     public function select($data) {
         $withArray = FilterHelper::getRelationsArray($data);
         $filter = app()->make(DoctorFilter::class, ['queryParams' => array_filter($data)]);

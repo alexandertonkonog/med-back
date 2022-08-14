@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Group::factory(5)->create();
+        \App\Models\UserType::factory(5)->create();
         \App\Models\User::factory(20)->create();
         \App\Models\Service::factory(100)->create();
         \App\Models\Clinic::factory(100)->create();
@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\File::factory(10)->create();
         \App\Models\Connection::factory(20)->create();
         \App\Models\Appointment::factory(50)->create();
-        \App\Models\Schedule::factory(50)->create();
+        // \App\Models\Schedule::factory(50)->create();
     }
 }
